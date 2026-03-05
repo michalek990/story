@@ -1,0 +1,61 @@
+image: node:20-alpine
+
+stages:
+  - install
+  - lint
+  - test
+  - build
+
+variables:
+  YARN_CACHE_FOLDER: .yarn-cache
+
+cache:
+  key: '$CI_COMMIT_REF_SLUG'
+  paths:
+    - node_modules/
+    - .yarn-cache/
+
+install:
+  stage: install
+  script:
+    - yarn install --frozen-lockfile
+  artifacts:
+    paths:
+      - node_modules/
+
+lint:
+  stage: lint
+  script:
+    - yarn lint
+  needs: [install]
+
+test:
+  stage: test
+  script:
+    - yarn test
+  needs: [install]
+  coverage: '/Lines\s*:\s*(\d+\.?\d*)%/'
+
+build:test:
+  stage: build
+  script:
+    - yarn build:test
+  needs: [lint, test]
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 1 week
+  only:
+    - develop
+
+build:prod:
+  stage: build
+  script:
+    - yarn build:prod
+  needs: [lint, test]
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 4 weeks
+  only:
+    - main

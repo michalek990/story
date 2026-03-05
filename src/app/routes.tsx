@@ -1,0 +1,12 @@
+import { createBrowserRouter } from 'react-router-dom';
+
+export const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <div>Home page</div>,
+  },
+  {
+    path: '*',
+    element: <div>404 — Strona nie istnieje</div>,
+  },
+]);
