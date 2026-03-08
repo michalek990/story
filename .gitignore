@@ -36,3 +36,6 @@ dist-ssr
 
 # fonts (dodaj własne)
 public/fonts/*.woff2
+
+*storybook.log
+storybook-static
