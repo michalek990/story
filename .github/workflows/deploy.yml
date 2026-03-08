@@ -39,7 +39,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Run unit tests
-        run: yarn vitest run --passWithNoTests
+        run: yarn vitest run --project unit --passWithNoTests
 
       - name: Build
         run: yarn build
