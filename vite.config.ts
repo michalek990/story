@@ -4,15 +4,19 @@ import tailwindcss from '@tailwindcss/vite'
 import path from 'path'
 
 export default defineConfig({
+  base: process.env.VITE_BASE_URL ?? '/',
+
   plugins: [
     react(),
     tailwindcss(),
   ],
+
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
   },
+
   test: {
     globals: true,
     environment: 'jsdom',
